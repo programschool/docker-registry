@@ -49,7 +49,7 @@ func (c Client) Post(url string, postData map[string]string) Client {
 	post := strings.TrimSpace(r.Form.Encode())
 	req, err := http.NewRequest("POST", targetUrl, strings.NewReader(post))
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	c.setHeader(req)
 	resp, _ := http.DefaultClient.Do(req)
@@ -67,7 +67,7 @@ func (c Client) PostBytes(url string, postData interface{}) Client {
 	post, _ := json.Marshal(postData)
 	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(post))
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	c.setHeader(req)
 	resp, _ := http.DefaultClient.Do(req)
@@ -80,7 +80,7 @@ func (c Client) PostBytes(url string, postData interface{}) Client {
 func (c Client) Get(url string) Client {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	c.setHeader(req)
 	resp, _ := http.DefaultClient.Do(req)
@@ -103,10 +103,10 @@ func (c Client) setHeader(req *http.Request) {
 func testHTTP(url string) {
 	resp, err := http.Head(url)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	if resp.StatusCode != 200 {
-		panic(fmt.Sprintf("\n\n\n%s: %s\n", url, resp.Status))
+		log.Println(fmt.Sprintf("\n\n\n%s: %s\n", url, resp.Status))
 	}
 }
 
@@ -134,7 +134,7 @@ func (c Client) deBug() {
 	if c.DeBug == true {
 		body, err := ioutil.ReadAll(c.Resp.Body)
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 		log.Println("\n\n\n\n======================DeBug======================")
 		log.Println(string(body))

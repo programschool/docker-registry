@@ -6,6 +6,7 @@ import (
 	"../library/request"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"log"
 )
 
 type verified struct {
@@ -30,7 +31,7 @@ func Basicauth() echo.MiddlewareFunc {
 		data := new(verified)
 		err := client.Post("registry/basic_auth", user).ParseJson(data)
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 
 		if data.Ok {
