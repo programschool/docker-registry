@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/labstack/echo"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -37,21 +38,27 @@ func (c Client) Create() Client {
 }
 
 // 发送普通数据请求 二维map
-func (c Client) Post(url string, postData map[string]string) Client {
+func (c Client) Post(url string, postData map[string]interface{}) Client {
 	targetUrl := c.getUrl(url)
 	testHTTP(targetUrl)
 
-	var r http.Request
-	r.ParseForm()
-	for k, v := range postData {
-		r.Form.Add(k, v)
-	}
-	post := strings.TrimSpace(r.Form.Encode())
-	req, err := http.NewRequest("POST", targetUrl, strings.NewReader(post))
+	//var r http.Request
+	//r.ParseForm()
+	//for k, v := range postData {
+	//	r.Form.Add(k, v)
+	//}
+
+	post, err := json.Marshal(postData)
 	if err != nil {
 		log.Println(err)
 	}
-	c.setHeader(req)
+	req, err := http.NewRequest(http.MethodPost, targetUrl, strings.NewReader(string(post)))
+	if err != nil {
+		log.Println(err)
+	}
+	//c.setHeader(req)
+	req.Header.Add(echo.HeaderAccept, echo.MIMEApplicationJSON)
+	req.Header.Add(echo.HeaderContentType, echo.MIMEApplicationJSON)
 	resp, _ := http.DefaultClient.Do(req)
 	c.Resp = resp
 
@@ -65,11 +72,11 @@ func (c Client) PostBytes(url string, postData interface{}) Client {
 	testHTTP(targetUrl)
 
 	post, _ := json.Marshal(postData)
-	req, err := http.NewRequest("POST", targetUrl, bytes.NewReader(post))
+	req, err := http.NewRequest(http.MethodPost, targetUrl, bytes.NewReader(post))
 	if err != nil {
 		log.Println(err)
 	}
-	c.setHeader(req)
+	//c.setHeader(req)
 	resp, _ := http.DefaultClient.Do(req)
 	c.Resp = resp
 
@@ -78,7 +85,7 @@ func (c Client) PostBytes(url string, postData interface{}) Client {
 }
 
 func (c Client) Get(url string) Client {
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		log.Println(err)
 	}

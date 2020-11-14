@@ -13,7 +13,6 @@ func main() {
 	// Routes
 	router.Public(e)
 	router.Private(e)
-
 	conf := config.Load()
 	// Start server
 	address := fmt.Sprintf("%s:%s", conf.Host, conf.Port)

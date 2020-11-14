@@ -25,6 +25,7 @@ func Private(e *echo.Echo) {
 	g := e.Group("/v2")
 
 	g.Use(middleware.Basicauth())
+	g.GET("", authedHandle)
 	g.GET("/", authedHandle)
 	g.HEAD("/:user/:name/manifests/:reference", privateProxyHandle)
 	g.HEAD("/:user/:name/blobs/:digest", privateProxyHandle)
@@ -48,7 +49,8 @@ func Public(e *echo.Echo) {
 }
 
 func homeHandle(c echo.Context) error {
-	return c.String(http.StatusOK, "PS Hub")
+	//return c.String(http.StatusOK, "PS Hub")
+	return c.Redirect(http.StatusMovedPermanently, "https://www.boxlayer.com/")
 }
 
 func publicProxyHandle(c echo.Context) error {
@@ -68,7 +70,7 @@ func privateProxyHandle(c echo.Context) error {
 	name := c.Param("name")
 	imageFullName := fmt.Sprintf("%s/%s", user, name)
 
-	permit := checkPermit(username, imageFullName)
+	permit := checkPermit(c.Request().Host, username, imageFullName)
 
 	if permit.Ok {
 		manifest, digest := getManifest(c.Request())
@@ -100,7 +102,7 @@ func privateProxyHandle(c echo.Context) error {
 			}
 
 			client := request.Client{DeBug: conf.DeBug}.Create()
-			res := client.PostBytes(requestTarget, data)
+			res := client.Post(requestTarget, data)
 			body, _ := ioutil.ReadAll(res.Resp.Body)
 			log.Println(string(body))
 		}
@@ -116,14 +118,13 @@ type permit struct {
 	Message string
 }
 
-func checkPermit(username string, imageFullName string) *permit {
+func checkPermit(host string, username string, imageFullName string) *permit {
 	client := request.Client{DeBug: conf.DeBug}.Create()
-	post := map[string]string{
+	post := map[string]interface{}{
+		"host":          host,
 		"username":      username,
 		"imageFullName": imageFullName,
 	}
-
-	// log.Println(post)
 
 	checked := new(permit)
 	err := client.Post("registry/permit", post).ParseJson(checked)

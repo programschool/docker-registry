@@ -22,14 +22,14 @@ todo
 */
 func Basicauth() echo.MiddlewareFunc {
 	return middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
-		user := map[string]string{
+		user := map[string]interface{}{
 			"username": username,
 			"password": password,
 		}
 		client := request.Client{DeBug: conf.DeBug}.Create()
 
 		data := new(verified)
-		err := client.Post("registry/basic_auth", user).ParseJson(data)
+		err := client.Post("registry/basic-auth", user).ParseJson(data)
 		if err != nil {
 			log.Println(err)
 		}
