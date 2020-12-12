@@ -49,8 +49,8 @@ func Public(e *echo.Echo) {
 }
 
 func homeHandle(c echo.Context) error {
-	//return c.String(http.StatusOK, "PS Hub")
-	return c.Redirect(http.StatusMovedPermanently, "https://www.boxlayer.com/")
+	return c.String(http.StatusOK, "PS Hub")
+	//return c.Redirect(http.StatusMovedPermanently, "https://www.boxlayer.com/")
 }
 
 func publicProxyHandle(c echo.Context) error {
