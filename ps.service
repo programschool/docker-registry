@@ -1,0 +1,38 @@
+[Unit]
+#systemd docs https://wiki.archlinux.org/index.php/Systemd
+Description=Program School Service
+After=network.target
+
+# /lib/systemd/system/
+
+[Service]
+Type=simple
+# simple - A long-running process that does not background its self and stays attached to the shell.
+# forking - A typical daemon that forks itself detaching it from the process that ran it, effectively backgrounding itself.
+# oneshot - A short-lived process that is expected to exit.
+# dbus - Like simple, but notification of processes startup finishing is sent over dbus.
+# notify - Like simple, but notification of processes startup finishing is sent over inotify.
+# idle - Like simple, but the binary is started after the job has been dispatched.
+#EnvironmentFile=-/etc/default/ssh
+# ExecStartPre=/bin/bash /home/
+ExecStart=/bin/bash /home/services/start.sh
+PIDFile=/var/run/ps.pid
+# ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/bash /home/services/stop.sh
+KillMode=process
+Restart=on-failure
+#no（默认值）：退出后不会重启
+#on-success：只有正常退出时（退出状态码为0），才会重启
+#on-failure：非正常退出时（退出状态码非0），包括被信号终止和超时，才会重启
+#on-abnormal：只有被信号终止和超时，才会重启
+#on-abort：只有在收到没有捕捉到的信号终止时，才会重启
+#on-watchdog：超时退出，才会重启
+#always：不管是什么退出原因，总是重启
+User=root
+RestartPreventExitStatus=255
+TimeoutStopSec=5
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+#Alias=ps.service

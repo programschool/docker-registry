@@ -15,6 +15,7 @@ func main() {
 	router.Private(e)
 	conf := config.Load()
 	// Start server
+	fmt.Println("Private Registry Service For boxlayer.com")
 	address := fmt.Sprintf("%s:%s", conf.Host, conf.Port)
 	e.Logger.Fatal(e.StartTLS(address, conf.CertFile, conf.KeyFile))
 }

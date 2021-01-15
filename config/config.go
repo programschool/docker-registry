@@ -13,11 +13,12 @@ type conf struct {
 	CertFile string
 	KeyFile  string
 	Proxy    []struct {
-		Match   string
-		Request string
-		Scheme  string
-		Host    string
-		Port    string
+		Match        string
+		Request      string
+		Scheme       string
+		Host         string
+		Port         string
+		InternalPort string
 	}
 	Api   string
 	DeBug bool
