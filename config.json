@@ -20,6 +20,6 @@
       "port": "443"
     }
   ],
-  "api": "http://registry.loc:9092",
+  "api": "https://registry.boxlayer.com",
   "debug": false
 }
