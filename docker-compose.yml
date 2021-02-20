@@ -1,0 +1,8 @@
+registry:
+  restart: always
+  image: registry.cn-wulanchabu.aliyuncs.com/programschool-dev/registry:latest
+  ports:
+    - 443:443
+  environment:
+  volumes:
+    - /home/ssl:/home/ssl

@@ -1,0 +1,25 @@
+{
+  "host": "0.0.0.0",
+  "port": "443",
+  "certFile": "./ssl/boxlayer.com/fullchain.pem",
+  "keyFile": "./ssl/boxlayer.com/privkey.pem",
+  "proxy": [
+    {
+      "match": "boxlayer.com",
+      "request": "push-image",
+      "scheme": "https",
+      "host": "192.168.10.103",
+      "port": "443",
+      "internalPort": "443"
+    },
+    {
+      "match": "container.boxlayer.com",
+      "request": "push-container",
+      "scheme": "https",
+      "host": "192.168.10.103",
+      "port": "443"
+    }
+  ],
+  "api": "https://registry.boxlayer.com",
+  "debug": false
+}
