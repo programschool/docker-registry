@@ -1,8 +1,8 @@
 {
   "host": "0.0.0.0",
   "port": "443",
-  "certFile": "./ssl/boxlayer.com/fullchain.pem",
-  "keyFile": "./ssl/boxlayer.com/privkey.pem",
+  "certFile": "/home/ssl/boxlayer.com/fullchain.pem",
+  "keyFile": "/home/ssl/boxlayer.com/privkey.pem",
   "proxy": [
     {
       "match": "boxlayer.com",

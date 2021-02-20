@@ -6,7 +6,7 @@ export GOARCH=amd64
 go fmt main.go
 go build -o registry main.go
 
-cp ./conf/config-dev.json config.json
+cp ./conf.d/config-dev.json config.json
 dev="-dev"
 
 if [[ $1 = '--prod' ]]
