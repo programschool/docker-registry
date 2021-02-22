@@ -15,10 +15,10 @@ then
   dev=""
 fi
 
-build="docker build . -f Dockerfile -t registry.cn-wulanchabu.aliyuncs.com/programschool$dev/registry:latest"
+build="docker build . -f Dockerfile -t registry.cn-wulanchabu.aliyuncs.com/programschool$dev/docker-registry:latest"
 $build
 
-push="docker push registry.cn-wulanchabu.aliyuncs.com/programschool$dev/registry:latest"
+push="docker push registry.cn-wulanchabu.aliyuncs.com/programschool$dev/docker-registry:latest"
 $push
 
 rm registry

@@ -3,7 +3,7 @@
 
 tag=`date +"TIME%Y-%m%d-%H%M"`
 
-app="entry-proxy"
+app="registry"
 space="programschool-dev"
 
 ID=`docker images registry.cn-wulanchabu.aliyuncs.com/$space/$app:latest -q`
