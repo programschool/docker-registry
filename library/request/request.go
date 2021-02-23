@@ -4,6 +4,7 @@ import (
 	"../../config"
 	"bytes"
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
@@ -30,6 +31,14 @@ var headers = map[string]string{
 	"Connection":   "Keep-Alive",
 }
 
+var httpClient = http.Client{
+	Transport: &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // this will make it 'work' but then the hostname isn't checked
+		},
+	},
+}
+
 func (c Client) Create() Client {
 	if len(c.BaseUrl) == 0 {
 		c.BaseUrl = config.Load().Api
@@ -52,6 +61,7 @@ func (c Client) Post(url string, postData map[string]interface{}) Client {
 	if err != nil {
 		log.Println(err)
 	}
+
 	req, err := http.NewRequest(http.MethodPost, targetUrl, strings.NewReader(string(post)))
 	if err != nil {
 		log.Println(err)
@@ -59,7 +69,8 @@ func (c Client) Post(url string, postData map[string]interface{}) Client {
 	//c.setHeader(req)
 	req.Header.Add(echo.HeaderAccept, echo.MIMEApplicationJSON)
 	req.Header.Add(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	resp, _ := http.DefaultClient.Do(req)
+
+	resp, _ := httpClient.Do(req)
 	c.Resp = resp
 
 	c.deBug()
@@ -77,7 +88,7 @@ func (c Client) PostBytes(url string, postData interface{}) Client {
 		log.Println(err)
 	}
 	//c.setHeader(req)
-	resp, _ := http.DefaultClient.Do(req)
+	resp, _ := httpClient.Do(req)
 	c.Resp = resp
 
 	c.deBug()
@@ -90,7 +101,7 @@ func (c Client) Get(url string) Client {
 		log.Println(err)
 	}
 	c.setHeader(req)
-	resp, _ := http.DefaultClient.Do(req)
+	resp, _ := httpClient.Do(req)
 	c.Resp = resp
 
 	c.deBug()
@@ -108,7 +119,7 @@ func (c Client) setHeader(req *http.Request) {
 
 // 测试链接，防止拼写错误
 func testHTTP(url string) {
-	resp, err := http.Head(url)
+	resp, err := httpClient.Head(url)
 	if err != nil {
 		log.Println(err)
 	}
