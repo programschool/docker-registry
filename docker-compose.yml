@@ -1,6 +1,7 @@
 registry:
   restart: always
   image: registry.cn-wulanchabu.aliyuncs.com/programschool-dev/docker-registry:latest
+  container_name: docker-registry
   ports:
     - 4999:4999
   entrypoint: ./registry

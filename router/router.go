@@ -167,7 +167,14 @@ func goProxy(c echo.Context) error {
 				Scheme: proxy.Scheme,
 				Host:   fmt.Sprintf("%s:%s", proxy.Host, proxy.Port),
 			}
-			if c.RealIP() == "8.130.25.65" {
+			// 内网访问
+			var isInternal = false
+			for _, address := range config.InternalAddress {
+				if c.RealIP() == address {
+					isInternal = true
+				}
+			}
+			if isInternal {
 				target.Host = fmt.Sprintf("%s:%s", proxy.Host, proxy.InternalPort)
 			}
 			break
