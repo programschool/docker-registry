@@ -16,12 +16,12 @@ if [[ $ID != $NEWID ]]
 then
   execTag="docker tag $ID registry.cn-wulanchabu.aliyuncs.com/$space/$app:$tag"
   $execTag;
-  stop="docker stop $app"
-  $stop
-  stop="docker rm $app"
-  $rm
+  stopcmd="docker stop $app"
+  $stopcmd
+  rmcmd="docker rm $app"
+  $rmcmd
 
-  docker-compose -f docker-compose.yml up -d
+  /usr/local/bin/docker-compose -f docker-compose.yml up -d
 else
   echo -e "\n"
   echo no update

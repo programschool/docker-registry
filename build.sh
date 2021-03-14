@@ -11,7 +11,7 @@ dev="-dev"
 
 if [[ $1 = '--prod' ]]
 then
-  cp ./conf/config.json config.json
+  cp ./conf.d/config.json config.json
   dev=""
 fi
 

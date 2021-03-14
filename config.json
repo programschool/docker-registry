@@ -8,7 +8,7 @@
       "match": "boxlayer.com",
       "request": "push-image",
       "scheme": "https",
-      "host": "192.168.50.103",
+      "host": "172.27.119.96",
       "port": "5000",
       "internalPort": "5001"
     },
@@ -16,7 +16,7 @@
       "match": "container.boxlayer.com",
       "request": "push-container",
       "scheme": "https",
-      "host": "192.168.50.103",
+      "host": "172.27.119.96",
       "port": "5002"
     }
   ],
