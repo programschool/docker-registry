@@ -7,3 +7,4 @@ registry:
   entrypoint: ./registry
   volumes:
     - /home/ssl:/home/ssl
+    - /home/logs:/home/logs
