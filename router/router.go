@@ -1,16 +1,16 @@
 package router
 
 import (
-	"../config"
-	"../library/request"
-	"../middleware"
 	"bytes"
 	"crypto/sha256"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/docker/distribution/manifest/schema2"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	"github.com/programschool/docker-registry/config"
+	"github.com/programschool/docker-registry/library/request"
+	"github.com/programschool/docker-registry/middleware"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -191,6 +191,10 @@ func goProxy(c echo.Context) error {
 		proxy.Transport = &http.Transport{
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		}
+
+		println(target.Scheme)
+		println(target.Host)
+		println(proxy)
 
 		proxy.ServeHTTP(c.Response(), c.Request())
 	}

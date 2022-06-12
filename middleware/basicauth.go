@@ -2,10 +2,10 @@
 package middleware
 
 import (
-	"../config"
-	"../library/request"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/programschool/docker-registry/config"
+	"github.com/programschool/docker-registry/library/request"
 	"log"
 )
 

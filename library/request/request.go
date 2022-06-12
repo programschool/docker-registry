@@ -1,13 +1,13 @@
 package request
 
 import (
-	"../../config"
 	"bytes"
 	"context"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	"github.com/programschool/docker-registry/config"
 	"io/ioutil"
 	"log"
 	"net/http"

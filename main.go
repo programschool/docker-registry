@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./config"
-	"./router"
 	"fmt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	"github.com/programschool/docker-registry/config"
+	"github.com/programschool/docker-registry/router"
 	"os"
 )
 
