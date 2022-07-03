@@ -13,4 +13,7 @@ then
 elif [[ $1 = 'online' ]]
 then
   bash script/build-online.sh "$2"
+elif [[ $1 = 'org' ]]
+then
+  bash script/build-org.sh "$2"
 fi
